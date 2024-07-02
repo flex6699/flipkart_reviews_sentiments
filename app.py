@@ -89,6 +89,7 @@ template = """
     {query}
 
     Please provide your analysis in one word: "positive", "negative", or "neutral." I need answers only in "positive", "negative", or "neutral".
+    "only provide answer in positive ,negative or neutral only one word"
 
     Thank you.
     """
