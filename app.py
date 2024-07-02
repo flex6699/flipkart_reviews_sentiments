@@ -105,7 +105,7 @@ if st.button("Scrape and Analyze Reviews"):
     
     with st.spinner("Analyzing sentiment..."):
         results = [(review, llmResponse(review)) for review in reviews]
-    st.write(results)
+    
     st.success("Analysis complete!")
     
     for review, sentiment in results:
