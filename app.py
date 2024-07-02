@@ -14,10 +14,7 @@ import os
 
 
 
-# Selenium setup
-webdriver_path = 'chromedriver.exe'  # Ensure chromedriver.exe is in the same directory or provide the full path
-service = Service(webdriver_path)
-driver = webdriver.Chrome(service=service)
+
 
 # Hugging Face setup
 api_token = st.secrets["secrets"]["HUGGINGFACEHUB_API_TOKEN"]
