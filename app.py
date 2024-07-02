@@ -109,10 +109,10 @@ if st.button("Scrape and Analyze Reviews"):
     st.success("Analysis complete!")
     
     for review, sentiment in results:
-        if sentiment == "positive":
+        if sentiment == "Positive":
             st.markdown(f'<div style="background-color: #FFFF00; padding: 10px; margin: 10px; border-radius: 5px;">\
                          <span title="Positive" style="display: inline-block; width: 100%; height: 100%; cursor: help;">{review}</span></div>', unsafe_allow_html=True)
-        elif sentiment == "negative":
+        elif sentiment == "Negative":
             st.markdown(f'<div style="background-color: #FF0000; padding: 10px; margin: 10px; border-radius: 5px;">\
                          <span title="Negative" style="display: inline-block; width: 100%; height: 100%; cursor: help;">{review}</span></div>', unsafe_allow_html=True)
 
