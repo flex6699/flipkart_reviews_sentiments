@@ -55,7 +55,7 @@ def scrape_reviews(url, max_page):
             reviews_all = soup.find_all(class_='ZmyHeo')
             if not reviews_all:
                 print(f"No reviews found on page {i}")
-                
+                continue
             reviews = [clean_review(review.text) for review in reviews_all]
           
             total_reviews.extend(reviews)
