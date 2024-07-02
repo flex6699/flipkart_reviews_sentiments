@@ -2,8 +2,8 @@ import re
 import time
 import streamlit as st
 from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
-from selenium.common.exceptions import WebDriverException
 from bs4 import BeautifulSoup
 from langchain_community.llms import HuggingFaceEndpoint
 from langchain.chains import LLMChain
@@ -52,22 +52,35 @@ def scrape_reviews(url, max_page):
     total_reviews = []
     for i in range(1, max_page + 1):
         page_url = f"{url}&page={i}"
-        try:
-            driver.get(page_url)
-            driver.execute_script("window.scrollTo(0, document.documentElement.scrollHeight);")
-            time.sleep(4)
-            html = driver.page_source
-            soup = BeautifulSoup(html, 'html.parser')
-            reviews_all = soup.find_all(class_='ZmyHeo')
-            if not reviews_all:
-                print(f"No reviews found on page {i}")
-                break
-            reviews = [clean_review(review.text) for review in reviews_all]
-            total_reviews.extend(reviews)
-        except WebDriverException as e:
-            print(f"Error scraping page {i}: {str(e)}")
-            break
-    return total_reviews
+        driver = None
+    try:
+        # Using on Local
+        options = webdriver.ChromeOptions()
+        options.add_argument('--headless')
+        options.add_argument('--disable-gpu')
+        options.add_argument('--window-size=1920,1200')
+        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),
+                                  options=options)
+        st.write(f"DEBUG:DRIVER:{driver}")
+        driver.get(url)
+        time.sleep(5)
+        html_doc = driver.page_source
+        driver.quit()
+        soup = BeautifulSoup(html_doc, "html.parser")
+        
+        reviews_all = soup.find_all(class_='ZmyHeo')
+        if not reviews_all:
+            print(f"No reviews found on page {i}")
+              
+        reviews = [clean_review(review.text) for review in reviews_all]
+        total_reviews.extend(reviews)
+        return total_reviews
+    except Exception as e:
+        st.write(f"DEBUG:INIT_DRIVER:ERROR:{e}")
+    finally:
+        if driver is not None: driver.quit()
+    return None
+       
 
 def llmResponse(query):
     response = llm_chain.run(query)
@@ -85,7 +98,7 @@ if st.button("Scrape and Analyze Reviews"):
     
     with st.spinner("Analyzing sentiment..."):
         results = [(review, llmResponse(review)) for review in reviews]
-   
+    print(results)
     st.success("Analysis complete!")
     for review, sentiment in results:
         if sentiment == "Positive":
