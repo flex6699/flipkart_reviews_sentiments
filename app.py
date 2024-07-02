@@ -49,7 +49,7 @@ def scrape_reviews(url, max_page):
             driver = get_driver()
             driver.get(page_url)
             
-            time.sleep(10)
+            
             html = driver.page_source
             soup = BeautifulSoup(html, 'html.parser')
             reviews_all = soup.find_all(class_='ZmyHeo')
