@@ -50,33 +50,33 @@ def scrape_reviews(url, max_page):
     for i in range(1, max_page + 1):
         page_url = f"{url}&page={i}"
         driver = None
-    try:
+        try:
         # Using on Local
-        options = webdriver.ChromeOptions()
-        options.add_argument('--headless')
-        options.add_argument('--disable-gpu')
-        options.add_argument('--window-size=1920,1200')
-        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),
+            options = webdriver.ChromeOptions()
+            options.add_argument('--headless')
+            options.add_argument('--disable-gpu')
+            options.add_argument('--window-size=1920,1200')
+            driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),
                                   options=options)
-        st.write(f"DEBUG:DRIVER:{driver}")
-        driver.get(url)
-        time.sleep(5)
-        html_doc = driver.page_source
-        driver.quit()
-        soup = BeautifulSoup(html_doc, "html.parser")
-        st.write(soup)
-        reviews_all = soup.find_all(class_='ZmyHeo')
+            st.write(f"DEBUG:DRIVER:{driver}")
+            driver.get(url)
+            time.sleep(5)
+            html_doc = driver.page_source
+            driver.quit()
+            soup = BeautifulSoup(html_doc, "html.parser")
+            st.write(soup)
+            reviews_all = soup.find_all(class_='ZmyHeo')
        
-        if not reviews_all:
-            print(f"No reviews found on page {i}")
+            if not reviews_all:
+                print(f"No reviews found on page {i}")
               
-        reviews = [clean_review(review.text) for review in reviews_all]
-        total_reviews.extend(reviews)
-        return total_reviews
-    except Exception as e:
-        st.write(f"DEBUG:INIT_DRIVER:ERROR:{e}")
-    finally:
-        if driver is not None: driver.quit()
+            reviews = [clean_review(review.text) for review in reviews_all]
+            total_reviews.extend(reviews)
+            return total_reviews
+        except Exception as e:
+            st.write(f"DEBUG:INIT_DRIVER:ERROR:{e}")
+        finally:
+            if driver is not None: driver.quit()
     
        
 
