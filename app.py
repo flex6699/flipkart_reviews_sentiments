@@ -17,17 +17,7 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.core.os_manager import ChromeType
 
-@st.cache_resource
-def get_driver():
-    return webdriver.Chrome(
-        service=Service(
-            ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()
-        ),
-        options=options,
-        )
-options = Options()
-options.add_argument("--disable-gpu")
-options.add_argument("--headless")
+
 
     
 
@@ -44,12 +34,22 @@ def scrape_reviews(url, max_page):
     for i in range(1, max_page + 1):
         page_url = f"{url}&page={i}"
         try:
-            
+            @st.cache_resource
+            def get_driver():
+                return webdriver.Chrome(
+                service=Service(
+                ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()
+                            ),
+                options=options,
+                )
 
+            options = Options()
+            options.add_argument("--disable-gpu")
+            options.add_argument("--headless")
             driver = get_driver()
             driver.get(page_url)
             
-            time.sleep(4)
+            time.sleep(10)
             html = driver.page_source
             soup = BeautifulSoup(html, 'html.parser')
             reviews_all = soup.find_all(class_='ZmyHeo')
