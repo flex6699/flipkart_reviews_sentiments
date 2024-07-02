@@ -58,7 +58,7 @@ def scrape_reviews(url, max_page):
                 print(f"No reviews found on page {i}")
                 break
             reviews = [clean_review(review.text) for review in reviews_all]
-            st.write(reviews)
+            st.write(soup)
             total_reviews.extend(reviews)
         except WebDriverException as e:
             print(f"Error scraping page {i}: {str(e)}")
