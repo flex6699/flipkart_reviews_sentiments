@@ -106,7 +106,7 @@ if st.button("Scrape and Analyze Reviews"):
         results = [(review, llmResponse(review)) for review in reviews]
     
     st.success("Analysis complete!")
-    
+    st.write(results)
     for review, sentiment in results:
         if sentiment == "Positive":
             st.markdown(f'<div style="background-color: #FFFF00; padding: 10px; margin: 10px; border-radius: 5px;">\
