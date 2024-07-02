@@ -106,4 +106,4 @@ if st.button("Scrape and Analyze Reviews"):
                          <span title="Negative" style="display: inline-block; width: 100%; height: 100%; cursor: help;">{review}</span></div>', unsafe_allow_html=True)
 
 # Quit the driver after scraping all pages
-driver.quit()
+
