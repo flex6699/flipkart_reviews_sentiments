@@ -18,7 +18,7 @@ with st.echo():
     from webdriver_manager.chrome import ChromeDriverManager
     from webdriver_manager.core.os_manager import ChromeType
 
-    @st.cache_resource
+    
     def get_driver():
         return webdriver.Chrome(
             service=Service(
@@ -88,7 +88,7 @@ template = """
 
     {query}
 
-    Please provide your analysis in one word: "positive" or "negative." I need answers only in "positive" or "negative".
+    Please provide your analysis in one word: "positive", "negative", or "neutral." I need answers only in "positive", "negative", or "neutral".
 
     Thank you.
     """
@@ -107,7 +107,7 @@ if st.button("Scrape and Analyze Reviews"):
         results = [(review, llmResponse(review)) for review in reviews]
     
     st.success("Analysis complete!")
-    
+    st.write(results)
     for review, sentiment in results:
         if sentiment == "Positive":
             st.markdown(f'<div style="background-color: #FFFF00; padding: 10px; margin: 10px; border-radius: 5px;">\
@@ -115,6 +115,9 @@ if st.button("Scrape and Analyze Reviews"):
         elif sentiment == "Negative":
             st.markdown(f'<div style="background-color: #FF0000; padding: 10px; margin: 10px; border-radius: 5px;">\
                          <span title="Negative" style="display: inline-block; width: 100%; height: 100%; cursor: help;">{review}</span></div>', unsafe_allow_html=True)
+        else:
+            st.markdown(f'<div style="background-color: #00FF00; padding: 10px; margin: 10px; border-radius: 5px;">\
+                         <span title="Neutral" style="display: inline-block; width: 100%; height: 100%; cursor: help;">{review}</span></div>', unsafe_allow_html=True)
 
-# Quit the driver after scraping all pages
+
 
