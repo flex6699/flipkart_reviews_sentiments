@@ -11,24 +11,24 @@ from langchain_core.prompts import PromptTemplate
 from selenium import webdriver
 
 
-with st.echo():
-    from selenium import webdriver
-    from selenium.webdriver.chrome.options import Options
-    from selenium.webdriver.chrome.service import Service
-    from webdriver_manager.chrome import ChromeDriverManager
-    from webdriver_manager.core.os_manager import ChromeType
 
-    @st.cache_resource
-    def get_driver():
-        return webdriver.Chrome(
-            service=Service(
-                ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()
-            ),
-            options=options,
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.core.os_manager import ChromeType
+
+@st.cache_resource
+def get_driver():
+    return webdriver.Chrome(
+        service=Service(
+            ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()
+        ),
+        options=options,
         )
-    options = Options()
-    options.add_argument("--disable-gpu")
-    options.add_argument("--headless")
+options = Options()
+options.add_argument("--disable-gpu")
+options.add_argument("--headless")
 
     
 
@@ -58,7 +58,7 @@ def scrape_reviews(url, max_page):
                 print(f"No reviews found on page {i}")
                 break
             reviews = [clean_review(review.text) for review in reviews_all]
-            st.write(soup)
+          
             total_reviews.extend(reviews)
         except WebDriverException as e:
             print(f"Error scraping page {i}: {str(e)}")
