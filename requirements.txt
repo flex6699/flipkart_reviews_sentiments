@@ -2,5 +2,5 @@ selenium
 webdriver-manager
 beautifulsoup4
 sentence-transformers
-
+langchain-community
 langchain
