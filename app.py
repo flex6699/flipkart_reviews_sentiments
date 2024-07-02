@@ -11,23 +11,24 @@ from langchain_core.prompts import PromptTemplate
 from selenium import webdriver
 
 
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
-from webdriver_manager.core.os_manager import ChromeType
+with st.echo():
+    from selenium import webdriver
+    from selenium.webdriver.chrome.options import Options
+    from selenium.webdriver.chrome.service import Service
+    from webdriver_manager.chrome import ChromeDriverManager
+    from webdriver_manager.core.os_manager import ChromeType
 
-@st.cache_resource
-def get_driver():
-    return webdriver.Chrome(
-    service=Service(
-            ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()
+    @st.cache_resource
+    def get_driver():
+        return webdriver.Chrome(
+            service=Service(
+                ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()
             ),
             options=options,
         )
-options = Options()
-options.add_argument("--disable-gpu")
-options.add_argument("--headless")
+    options = Options()
+    options.add_argument("--disable-gpu")
+    options.add_argument("--headless")
 
     
 
@@ -106,7 +107,7 @@ if st.button("Scrape and Analyze Reviews"):
         results = [(review, llmResponse(review)) for review in reviews]
     
     st.success("Analysis complete!")
-    st.write(results)
+    
     for review, sentiment in results:
         if sentiment == "Positive":
             st.markdown(f'<div style="background-color: #FFFF00; padding: 10px; margin: 10px; border-radius: 5px;">\
@@ -118,5 +119,5 @@ if st.button("Scrape and Analyze Reviews"):
             st.markdown(f'<div style="background-color: #00FF00; padding: 10px; margin: 10px; border-radius: 5px;">\
                          <span title="Neutral" style="display: inline-block; width: 100%; height: 100%; cursor: help;">{review}</span></div>', unsafe_allow_html=True)
 
-
+# Quit the driver after scraping all pages
 
