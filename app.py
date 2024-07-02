@@ -61,7 +61,7 @@ def scrape_reviews(url, max_page):
             total_reviews.extend(reviews)
         except WebDriverException as e:
             print(f"Error scraping page {i}: {str(e)}")
-            break
+            
     return total_reviews
 
 # Function to perform sentiment analysis using Hugging Face model
