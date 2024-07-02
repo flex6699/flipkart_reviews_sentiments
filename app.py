@@ -66,6 +66,7 @@ def scrape_reviews(url, max_page):
         soup = BeautifulSoup(html_doc, "html.parser")
         
         reviews_all = soup.find_all(class_='ZmyHeo')
+        print(reviews_all)
         if not reviews_all:
             print(f"No reviews found on page {i}")
               
@@ -76,7 +77,7 @@ def scrape_reviews(url, max_page):
         st.write(f"DEBUG:INIT_DRIVER:ERROR:{e}")
     finally:
         if driver is not None: driver.quit()
-    return None
+    
        
 
 def llmResponse(query):
