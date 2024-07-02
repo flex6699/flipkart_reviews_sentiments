@@ -9,19 +9,28 @@ from langchain_community.llms import HuggingFaceEndpoint
 from langchain.chains import LLMChain
 from langchain_core.prompts import PromptTemplate
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
-from webdriver_manager.core.os_manager import ChromeType
 
 
-def get_driver():
+with st.echo():
+    from selenium import webdriver
+    from selenium.webdriver.chrome.options import Options
+    from selenium.webdriver.chrome.service import Service
+    from webdriver_manager.chrome import ChromeDriverManager
+    from webdriver_manager.core.os_manager import ChromeType
+
+    @st.cache_resource
+    def get_driver():
         return webdriver.Chrome(
             service=Service(
                 ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()
             ),
             options=options,
         )
+    options = Options()
+    options.add_argument("--disable-gpu")
+    options.add_argument("--headless")
+
+    
 
 
 def clean_review(review):
@@ -36,9 +45,7 @@ def scrape_reviews(url, max_page):
     for i in range(1, max_page + 1):
         page_url = f"{url}&page={i}"
         try:
-            options = Options()
-            options.add_argument("--disable-gpu")
-            options.add_argument("--headless")
+            
 
             driver = get_driver()
             driver.get(page_url)
