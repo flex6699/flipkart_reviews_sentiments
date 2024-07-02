@@ -64,9 +64,9 @@ def scrape_reviews(url, max_page):
         html_doc = driver.page_source
         driver.quit()
         soup = BeautifulSoup(html_doc, "html.parser")
-        
+        st.write(soup)
         reviews_all = soup.find_all(class_='ZmyHeo')
-        print(reviews_all)
+       
         if not reviews_all:
             print(f"No reviews found on page {i}")
               
