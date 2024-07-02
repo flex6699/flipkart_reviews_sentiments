@@ -8,11 +8,10 @@ from bs4 import BeautifulSoup
 from langchain_community.llms import HuggingFaceEndpoint
 from langchain.chains import LLMChain
 from langchain_core.prompts import PromptTemplate
-from selenium import webdriver
 
 
 
-from selenium import webdriver
+
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
