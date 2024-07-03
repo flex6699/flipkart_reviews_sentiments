@@ -40,13 +40,13 @@ def scrape_reviews(url, max_page):
         options=options,
                 )
 
-    options = Options()
-    options.add_argument("--disable-gpu")
-    options.add_argument("--headless")
     
     for i in range(1, max_page + 1):
         page_url = f"{url}&page={i}"
         try:
+            options = Options()
+            options.add_argument("--disable-gpu")
+            options.add_argument("--headless")
             driver = get_driver()
             driver.get(page_url)
             
@@ -63,7 +63,7 @@ def scrape_reviews(url, max_page):
         except WebDriverException as e:
             print(f"Error scraping page {i}: {str(e)}")
             
-        
+        driver.quit();
     return total_reviews
 
 # Function to perform sentiment analysis using Hugging Face model
