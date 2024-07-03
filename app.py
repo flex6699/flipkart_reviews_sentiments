@@ -62,7 +62,7 @@ def scrape_reviews(url, max_page):
             total_reviews.extend(reviews)
         except WebDriverException as e:
             print(f"Error scraping page {i}: {str(e)}")
-        driver.quit()        
+            
         
     return total_reviews
 
