@@ -43,6 +43,7 @@ def scrape_reviews(url, max_page):
     options = Options()
     options.add_argument("--disable-gpu")
     options.add_argument("--headless")
+    options.add_argument('--no-sandbox')
     driver = get_driver()
     for i in range(1, max_page + 1):
         page_url = f"{url}&page={i}"
