@@ -51,6 +51,8 @@ def scrape_reviews(url, max_page):
         try:
             
             driver.get(page_url)
+            driver.execute_script("window.scrollTo(0, document.documentElement.scrollHeight);")
+            time.sleep(4)
             
             
             html = driver.page_source
